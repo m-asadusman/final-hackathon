@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #f0ede8;
+    background-image: linear-gradient(135deg, #e8f5f3 0%, #f0ede8 40%, #fef3c7 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-teal text-white rounded-full px-6 py-3 font-semibold text-sm cursor-pointer border-none transition-all duration-200 hover:bg-teal-dark hover:-translate-y-px;
+  }
+  .btn-ghost {
+    @apply bg-transparent border border-gray-200 rounded-full px-5 py-2.5 font-medium text-sm cursor-pointer transition-all duration-200 hover:border-teal hover:text-teal;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-white outline-none transition-all duration-200 focus:border-teal font-dm;
+  }
+  .select-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl text-sm bg-white outline-none cursor-pointer font-dm;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100;
+  }
+  .card-dark {
+    @apply rounded-2xl text-white;
+    background-color: #1c2b2a;
+  }
+  .section-label {
+    @apply text-xs font-bold tracking-widest text-teal uppercase mb-1;
+  }
+  .hero-banner {
+    @apply rounded-2xl p-10 mb-8 text-white;
+    background-color: #1c2b2a;
+  }
+  .trust-bar {
+    @apply h-2 rounded-full bg-gray-200 overflow-hidden mt-1;
+  }
+  .trust-fill {
+    @apply h-full rounded-full;
+    background: linear-gradient(90deg, #f59e0b, #0d9488);
+  }
+  .nav-link {
+    @apply px-4 py-2 rounded-full text-sm font-medium text-gray-500 cursor-pointer border-none bg-transparent transition-all duration-200 hover:text-gray-900;
+  }
+  .nav-link-active {
+    @apply px-4 py-2 rounded-full text-sm font-medium text-white cursor-pointer border-none transition-all duration-200;
+    background-color: #1c2b2a;
+  }
+  .tag {
+    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold border;
+  }
+  .tag-teal { @apply bg-teal-light text-teal-dark border-teal; }
+  .tag-red { @apply bg-red-50 text-red-600 border-red-600; }
+  .tag-green { @apply bg-green-50 text-green-600 border-green-600; }
+  .tag-yellow { @apply bg-yellow-50 text-yellow-600 border-yellow-600; }
+  .tag-gray { @apply bg-gray-100 text-gray-500 border-gray-300; }
+  .request-card {
+    @apply bg-white rounded-xl p-5 border border-gray-100 mb-4 cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-px;
+  }
+  .notif-item {
+    @apply flex justify-between items-start px-4 py-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors;
+  }
+  .badge-pill { @apply bg-teal-light text-teal-dark px-2.5 py-0.5 rounded-full text-xs font-semibold; }
+  .badge-gray { @apply bg-gray-100 text-gray-500 px-2.5 py-0.5 rounded-full text-xs font-semibold; }
+  .stat-card { @apply bg-white rounded-2xl p-6 border border-gray-100; }
+}
