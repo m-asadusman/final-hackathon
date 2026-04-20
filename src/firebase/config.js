@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
-// Replace these with your real Firebase project values
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCVYzs7gVjrNxHD-AJhWEpU0Y26y3zetIc',
   authDomain: 'hackathon-4fc98.firebaseapp.com',

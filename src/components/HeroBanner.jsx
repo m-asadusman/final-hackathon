@@ -1,9 +1,14 @@
 export default function HeroBanner({ label, title, subtitle, children }) {
   return (
-    <div className="hero-banner mb-8">
-      {label && <div className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-2">{label}</div>}
-      <h1 className="font-syne text-4xl font-black leading-tight mb-3">{title}</h1>
-      {subtitle && <p className="text-gray-400 text-sm max-w-xl">{subtitle}</p>}
+    <div className="hero-banner">
+      {label && (
+        <p className="text-[10px] sm:text-xs font-bold tracking-[0.16em] text-teal/70 uppercase mb-3"
+          style={{ fontFamily: "'Instrument Sans', sans-serif" }}>
+          {label}
+        </p>
+      )}
+      <h1 className="h1 text-white mb-3">{title}</h1>
+      {subtitle && <p className="text-gray-400 text-sm sm:text-base max-w-2xl leading-relaxed">{subtitle}</p>}
       {children}
     </div>
   )

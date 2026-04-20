@@ -3,89 +3,96 @@ import { useApp } from '../context/AppContext'
 import HeroBanner from '../components/HeroBanner'
 import RequestCard from '../components/RequestCard'
 
-const CATEGORIES = ['Web Development', 'Design', 'Data Science', 'Career', 'Community']
-const URGENCIES = ['High', 'Medium', 'Low']
-const STATUSES = ['Open', 'Solved']
+const CATS = ['Web Development','Design','Data Science','Career','Community']
+const URGS = ['High','Medium','Low']
 
 export default function Explore() {
   const { posts } = useApp()
-  const [cat, setCat] = useState('')
-  const [urg, setUrg] = useState('')
+  const [cat, setCat]     = useState('')
+  const [urg, setUrg]     = useState('')
   const [status, setStatus] = useState('')
   const [search, setSearch] = useState('')
+  const [mobileFilters, setMobileFilters] = useState(false)
 
   const filtered = posts.filter(r =>
-    (!cat || r.category === cat) &&
-    (!urg || r.urgency === urg) &&
-    (!status || r.status === status) &&
+    (!cat    || r.category === cat) &&
+    (!urg    || r.urgency  === urg) &&
+    (!status || r.status   === status) &&
     (!search || r.title?.toLowerCase().includes(search.toLowerCase()) ||
-      r.desc?.toLowerCase().includes(search.toLowerCase()))
+               r.desc?.toLowerCase().includes(search.toLowerCase()))
+  )
+  const clear = () => { setCat(''); setUrg(''); setStatus(''); setSearch('') }
+  const hasFilter = cat || urg || status || search
+
+  const Filters = () => (
+    <div className="card p-5 sm:p-6">
+      <div className="section-label">FILTERS</div>
+      <h3 className="h4 text-gray-900 mb-4">Refine the feed</h3>
+      <div className="flex flex-col gap-3">
+        <div>
+          <label className="text-xs font-medium text-gray-500 block mb-1">Search</label>
+          <input className="input-field" placeholder="Search requests..." value={search} onChange={e => setSearch(e.target.value)} />
+        </div>
+        <div>
+          <label className="text-xs font-medium text-gray-500 block mb-1">Category</label>
+          <select className="select-field" value={cat} onChange={e => setCat(e.target.value)}>
+            <option value="">All categories</option>
+            {CATS.map(c => <option key={c}>{c}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="text-xs font-medium text-gray-500 block mb-1">Urgency</label>
+          <select className="select-field" value={urg} onChange={e => setUrg(e.target.value)}>
+            <option value="">All urgency levels</option>
+            {URGS.map(u => <option key={u}>{u}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="text-xs font-medium text-gray-500 block mb-1">Status</label>
+          <select className="select-field" value={status} onChange={e => setStatus(e.target.value)}>
+            <option value="">All statuses</option>
+            <option>Open</option><option>Solved</option>
+          </select>
+        </div>
+        {hasFilter && <button className="btn-ghost w-full text-sm" onClick={clear}>Clear all filters</button>}
+        <div className="p-3 bg-gray-50 rounded-xl text-xs text-gray-400 font-medium">
+          {filtered.length} of {posts.length} requests
+        </div>
+      </div>
+    </div>
   )
 
-  const clearAll = () => { setCat(''); setUrg(''); setStatus(''); setSearch('') }
-
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="page">
       <HeroBanner
         label="EXPLORE / FEED"
-        title="Browse help requests with filterable community context."
-        subtitle="Filter by category, urgency, and status to surface the best matches."
+        title="Discover help requests"
+        subtitle="Quickly find what matters using filters for category, urgency, and status."
       />
 
-      <div className="grid gap-6" style={{ gridTemplateColumns: '260px 1fr' }}>
-        <div className="card p-6 self-start">
-          <div className="section-label">FILTERS</div>
-          <h3 className="font-syne text-xl font-bold mb-5">Refine the feed</h3>
+      
+      <div className="flex items-center justify-between mb-4 lg:hidden">
+        <p className="text-sm text-gray-500 font-medium">{filtered.length} request{filtered.length !== 1 ? 's' : ''}</p>
+        <button className="btn-ghost text-sm flex items-center gap-2" onClick={() => setMobileFilters(o => !o)}>
+          <span>⚙</span>
+          {mobileFilters ? 'Hide' : 'Show'} Filters
+          {hasFilter && <span className="w-2 h-2 rounded-full bg-teal inline-block" />}
+        </button>
+      </div>
 
-          <div className="mb-4">
-            <label className="text-sm font-medium block mb-1.5">Search</label>
-            <input className="input-field" placeholder="Search requests..." value={search}
-              onChange={e => setSearch(e.target.value)} />
-          </div>
+      {mobileFilters && <div className="mb-4 lg:hidden"><Filters /></div>}
 
-          <div className="mb-4">
-            <label className="text-sm font-medium block mb-1.5">Category</label>
-            <select className="select-field" value={cat} onChange={e => setCat(e.target.value)}>
-              <option value="">All categories</option>
-              {CATEGORIES.map(c => <option key={c}>{c}</option>)}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label className="text-sm font-medium block mb-1.5">Urgency</label>
-            <select className="select-field" value={urg} onChange={e => setUrg(e.target.value)}>
-              <option value="">All urgency levels</option>
-              {URGENCIES.map(u => <option key={u}>{u}</option>)}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label className="text-sm font-medium block mb-1.5">Status</label>
-            <select className="select-field" value={status} onChange={e => setStatus(e.target.value)}>
-              <option value="">All statuses</option>
-              {STATUSES.map(s => <option key={s}>{s}</option>)}
-            </select>
-          </div>
-
-          {(cat || urg || status || search) && (
-            <button className="btn-ghost w-full text-sm" onClick={clearAll}>Clear filters</button>
-          )}
-
-          <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-            <div className="text-xs text-gray-400 font-medium">
-              Showing {filtered.length} of {posts.length} requests
-            </div>
-          </div>
-        </div>
-
+      <div className="with-sidebar">
+        <div className="hidden lg:block self-start sticky top-20"><Filters /></div>
         <div>
           {filtered.length > 0
             ? filtered.map(r => <RequestCard key={r.id} req={r} />)
             : (
-              <div className="card p-10 text-center text-gray-400">
+              <div className="card p-12 text-center text-gray-400">
                 <div className="text-4xl mb-3">🔍</div>
-                <div className="font-semibold">No requests match your filters.</div>
-                <div className="text-sm mt-1">Try adjusting the filters or clear them all.</div>
+                <p className="font-semibold">No requests match your filters.</p>
+                <p className="text-sm mt-1">Try adjusting or clearing your filters.</p>
+                {hasFilter && <button className="btn-ghost mt-4 text-sm" onClick={clear}>Clear filters</button>}
               </div>
             )
           }

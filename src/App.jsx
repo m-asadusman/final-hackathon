@@ -13,16 +13,17 @@ import Leaderboard from './pages/Leaderboard'
 import Notifications from './pages/Notifications'
 import Profile from './pages/Profile'
 import Insights from './pages/Insights'
+import { Loader } from 'lucide-react'
 
 function ProtectedRoute({ children }) {
   const { user, authLoading } = useApp()
   if (authLoading) return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center text-gray-400">
-        <div className="text-4xl mb-3 animate-pulse">⏳</div>
-        <div className="font-semibold text-sm">Authenticating...</div>
-      </div>
+    <div className="text-center text-gray-400">
+      <Loader className="w-10 h-10 mx-auto mb-3 animate-spin" />
+      <div className="font-semibold text-sm">Authenticating...</div>
     </div>
+  </div>
   )
   return user ? children : <Navigate to="/auth" replace />
 }

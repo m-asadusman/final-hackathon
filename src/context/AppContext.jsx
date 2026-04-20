@@ -28,7 +28,7 @@ export function AppProvider({ children }) {
   const [notifications, setNotifications] = useState([])
   const [authLoading, setAuthLoading] = useState(true)
 
-  // Watch auth state
+  
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -44,19 +44,19 @@ export function AppProvider({ children }) {
     return unsub
   }, [])
 
-  // Live posts
+  
   useEffect(() => {
     const unsub = subscribeToPosts(setPosts)
     return unsub
   }, [])
 
-  // Live users
+  
   useEffect(() => {
     const unsub = subscribeToUsers(setUsers)
     return unsub
   }, [])
 
-  // Live messages & notifications (auth-gated)
+  
   useEffect(() => {
     if (!user) {
       setMessages([])

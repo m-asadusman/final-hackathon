@@ -4,7 +4,7 @@ import {
 } from 'firebase/firestore'
 import { db } from './config'
 
-// ─── USERS ───────────────────────────────────────────────────────────────────
+
 
 export async function createUserProfile(uid, data) {
   await setDoc(doc(db, 'users', uid), {
@@ -36,7 +36,7 @@ export function subscribeToUsers(callback) {
   )
 }
 
-// ─── POSTS / REQUESTS ────────────────────────────────────────────────────────
+
 
 export async function createPost(data) {
   return addDoc(collection(db, 'posts'), {
@@ -77,7 +77,7 @@ export async function offerHelp(postId, userId) {
   })
 }
 
-// ─── MESSAGES ────────────────────────────────────────────────────────────────
+
 
 export async function sendMessage(fromUid, fromName, toUid, toName, text) {
   await addDoc(collection(db, 'messages'), {
@@ -98,7 +98,7 @@ export function subscribeToMessages(uid, callback) {
   )
 }
 
-// ─── NOTIFICATIONS ───────────────────────────────────────────────────────────
+
 
 export async function createNotification(uid, data) {
   await addDoc(collection(db, 'notifications'), {
